@@ -7,19 +7,41 @@
       </router-link>
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/">Home</router-link>
-        <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/login">Login</router-link>
-        <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/registration">registration</router-link>
+        <template v-if="!userLoggedIn">
+          <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/">Home</router-link>
+          <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/login">Login</router-link>
+          <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/registration">registration</router-link>
+        </template>
+        <template v-else>
+          <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/member-dashboard">Dashboard</router-link>
+          <button class="me-3 py-2 link-body-emphasis text-decoration-none btn btn-danger" @click="logout">Logout</button>
+        </template>
+
       </nav>
     </div>
 
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-      <h1 class="display-4 fw-normal text-body-emphasis">Pricing</h1>
+      <h1 class="display-4 fw-normal text-body-emphasis">Events</h1>
       <p class="fs-5 text-body-secondary">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
     </div>
   </header>
 </template>
 <script setup>
+import { useRouter } from 'vue-router';
+import { computed } from "vue";
+const router = useRouter();
+
+const userLoggedIn = computed(() => {
+  return localStorage.getItem('apiToken') ? true : false;
+})
+
+const logout = () => {
+  localStorage.removeItem('apiToken');
+  localStorage.removeItem('user');
+  router.push('/login').then( () => {
+    return window.location.reload();
+  });
+}
 </script>
 
 <style scoped>

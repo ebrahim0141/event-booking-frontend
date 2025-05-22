@@ -44,6 +44,7 @@
 import { ref } from 'vue';
 import api from '@/api/axios';
 import  { useRouter } from 'vue-router';
+import {useToast} from 'vue-toast-notification';
 
 const form = ref({
   name: '',
@@ -54,6 +55,7 @@ const form = ref({
 });
 
 const router = useRouter();
+const toast = useToast();
 
 const errors = ref({});
 
@@ -73,7 +75,12 @@ const register = async () => {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    });
+    })
+    toast.success('registration has been completed', {
+      position:'top-right',
+      duration:2000
+    })
+
     if (response.status) {
       setTimeout(()=>{
         router.push('/login').then(() => {
@@ -83,6 +90,9 @@ const register = async () => {
     }
 
   } catch (error) {
+    toast.error('validation error', {
+      position: 'top-right'
+    })
     errors.value = error.response.data.errors
   }
 };
