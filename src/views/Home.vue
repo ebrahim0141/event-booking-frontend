@@ -23,8 +23,12 @@
 <script setup>
 import api from '@/api/axios';
 import { onMounted, ref } from 'vue';
+import { useToast } from 'vue-toast-notification';
+import { useRouter } from 'vue-router';
 
 const events = ref([])
+const toast = useToast();
+const router = useRouter();
 
 onMounted(async () => {
   try{
@@ -42,6 +46,19 @@ const formatDateTime = (date) => {
   const d = new Date(date)
   return d.toLocaleString()
   //return
+}
+const handleBooking = (event) => {
+
+  const loggedInUser = localStorage.getItem('user')
+
+  if(!loggedInUser){
+    toast.error('no user')
+  }else{
+    router.push({
+      path: '/member-event-confirmation',
+      query: {eventId:event.id}
+    })
+  }
 }
 
 </script>
