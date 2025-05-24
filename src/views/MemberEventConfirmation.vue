@@ -111,11 +111,6 @@ const confirmbooking = ()=> {
     }, 200)
 
   })
-
-
-
-
-
 }
 
 
