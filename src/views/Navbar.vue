@@ -7,8 +7,8 @@
       </router-link>
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/">Home</router-link>
         <template v-if="!userLoggedIn">
-          <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/">Home</router-link>
           <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/login">Login</router-link>
           <router-link class="me-3 py-2 link-body-emphasis text-decoration-none" to="/registration">registration</router-link>
         </template>
